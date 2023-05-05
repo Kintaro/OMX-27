@@ -74,17 +74,25 @@ namespace midimacro
                     {
                         if (keyPos < 8)
                         {
-                            omxDisp.displayMessage("Mute");
+                            omxDisp.displayMessage("Mute A");
+							MM::sendNoteOn(mutePos, 1, midiMacroConfig.midiMacroChan);
                         }
                         else
                         {
-                            omxDisp.displayMessage("Solo");
+                            omxDisp.displayMessage("Mute B");
+							MM::sendNoteOn(mutePos, 1, midiMacroConfig.midiMacroChan + 1);
                         }
-                        MM::sendNoteOn(mutePos, 1, midiMacroConfig.midiMacroChan);
                     }
                     else
                     {
-                        MM::sendNoteOff(mutePos, 0, midiMacroConfig.midiMacroChan);
+						if (keyPos < 8)
+                        {
+                            MM::sendNoteOff(mutePos, 0, midiMacroConfig.midiMacroChan);
+					    }
+                        else
+                        {
+							MM::sendNoteOff(mutePos, 0, midiMacroConfig.midiMacroChan);
+						}
                     }
                     return; // break;
                 }
